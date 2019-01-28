@@ -1,7 +1,15 @@
-/**
- * Implement Gatsby's SSR (Server Side Rendering) APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/ssr-apis/
- */
+import { Provider, useStaticRendering } from "mobx-react";
+import { renderToString } from "react-dom/server";
+import Worldstate from "./src/containers/worldstate";
 
-// You can delete this file if you're not using it
+export default replaceRenderer = ({ bodyComponent, replaceBodyHTMLString }) => {
+    useStaticRendering(true);
+
+    const ProviderBody = () => (
+        <Provider Store={Worldstate}>
+                {bodyComponent}
+        </Provider>
+    );
+
+    replaceBodyHTMLString(renderToString(<ProviderBody />));
+};
