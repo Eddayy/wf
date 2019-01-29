@@ -2,7 +2,7 @@ import Swagger from 'swagger-client'
 
 import { observable, computed , action , configure , runInAction} from 'mobx';
 
-
+import swagger from './swagger'
 
 export default class Worldstate {  
     @observable pc_worldstate = {};
@@ -21,7 +21,12 @@ export default class Worldstate {
     }
 
     setclient = async () =>{
-      const client = await Swagger('https://docs.warframestat.us/swagger.json')
+      let client = await Swagger({
+        //url:'https://docs.warframestat.us/swagger.json',
+        spec: swagger
+      })
+      client.spec.schemes = ['https']
+      
       runInAction(()=>{
         this.client = client
       })
