@@ -12,7 +12,6 @@ const IndexPage = () => (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     <Landing store={new worldstate()}/>
-    <Link to="/">Go to page 2</Link>
   </Layout>
 )
 

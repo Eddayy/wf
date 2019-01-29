@@ -22,18 +22,26 @@ class Landing extends React.Component {
       <div>
         Worldstate:
         {persistentEnemies && 
-          persistentEnemies.map(acolyte => {
-            return(
-              <div key={acolyte.id}>
-              {acolyte.agentType}
-                <div>
-                  Status: {acolyte.isDiscovered ? `Found at ${acolyte.lastDiscoveredAt}`: `Missing`}
+            <div>
+            {persistentEnemies.map(acolyte => {
+              return(
+                <div key={acolyte.id}>
+                {acolyte.agentType}
+                  <div>
+                    Status: {acolyte.isDiscovered ? `Found at ${acolyte.lastDiscoveredAt}`: `Missing`}
+                  </div>
                 </div>
-              </div>
-            )
-          })
+              )
+            })}
+            <Countdown
+              key={Date.now()}
+              date={Date.now() + 20 * 1000}
+              renderer={({ seconds }) => {
+                return <span>{seconds} seconds</span>;
+              }}
+            />
+          </div>
         }
-        <Countdown date={Date.now() + this.state.seconds * 1000} renderer={({seconds})=>{return <span>{seconds} seconds</span>}} />
       </div>
     );
   }
