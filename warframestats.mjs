@@ -10,12 +10,14 @@ async function check(client,oldstate,options){
   let newstate = {}
   const list = await client.apis.worldstate.get_pc_persistentEnemies()
   if(typeof options === 'undefined'){
-    options = ['Angst','Malice','Torment']     
+    options = ['Angst','Malice','Torment','Violence']     
   }
+  
   list.obj.forEach((unit)=>{
     if (options.includes(unit.agentType)){
-      if(unit.lastDiscoveredTime != oldstate[unit.agentType]){
-        console.log(`${unit.agentType} discovered at ${unit.lastDiscoveredAt} at ${unit.lastDiscoveredTime}`)
+
+      if(unit.lastDiscoveredTime !== oldstate[unit.agentType] && unit.isDiscovered === true){
+        console.log(`\x1b[31m${unit.agentType}\x1b[0m`,`discovered at`,`\x1b[36m${unit.lastDiscoveredAt}\x1b[0m`,`at ${unit.lastDiscoveredTime}`)
         newstate[unit.agentType] = unit.lastDiscoveredTime
       }
       else{

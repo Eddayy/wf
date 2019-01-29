@@ -1,16 +1,15 @@
 import Swagger from 'swagger-client'
 
-import { observable, computed , action , configure } from 'mobx';
+import { observable, computed , action , configure , runInAction} from 'mobx';
 
 
 
 export default class Worldstate {  
-    @observable pc_worldstate = {text:"hello"};
+    @observable pc_worldstate = {};
     @observable client ={} ;
 
     constructor() {
       this.setclient()
-      this.setpcstate()
     }
 
     @computed get get_pc_persistentEnemies(){
@@ -21,19 +20,38 @@ export default class Worldstate {
       return this.pc_worldstate.persistentEnemies
     }
 
-
-    @action.bound
-    async setclient(){
-      
-      this.client = await Swagger('https://docs.warframestat.us/swagger.json')
+    setclient = async () =>{
+      const client = await Swagger('https://docs.warframestat.us/swagger.json')
+      runInAction(()=>{
+        this.client = client
+      })
+      const {body} = await this.client.apis.worldstate.get_pc()
+      runInAction(()=>{
+        this.pc_worldstate = body
+      })
     }
 
+    // setclient(){
+    //   Swagger('https://docs.warframestat.us/swagger.json')
+    //     .then((client)=>{
+    //       runInAction(()=>{
+    //         this.client = client
+    //         return client.apis.worldstate.get_pc()
+    //       })
+    //     })
+    //     .then(({body})=> {
+    //       runInAction(()=>{
+    //         this.pc_worldstate = body
+    //       })
+    //     })
+    // }
+
     @action
-    async setpcstate(){
-      console.log(this.client)
+    setpcstate = async () => {
       const {body} = await this.client.apis.worldstate.get_pc()
-      this.pc_worldstate = body
-      console.log(body)
+      runInAction(()=>{
+        this.pc_worldstate = body
+      })
     }   
     @action
     async checkpersistent(){
