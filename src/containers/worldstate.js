@@ -7,13 +7,14 @@ import swagger from './swagger'
 export default class Worldstate {  
     @observable pc_worldstate = {};
     @observable client ={} ;
+    @observable persistentEnemies = {};
 
     constructor() {
       this.setclient()
     }
 
     @computed get get_pc_persistentEnemies(){
-      return this.pc_worldstate.persistentEnemies
+      return this.persistentEnemies
     }
 
     @computed get check(){
@@ -34,22 +35,10 @@ export default class Worldstate {
       runInAction(()=>{
         this.pc_worldstate = body
       })
+      runInAction(()=>{
+        this.persistentEnemies = this.pc_worldstate.persistentEnemies
+      })
     }
-
-    // setclient(){
-    //   Swagger('https://docs.warframestat.us/swagger.json')
-    //     .then((client)=>{
-    //       runInAction(()=>{
-    //         this.client = client
-    //         return client.apis.worldstate.get_pc()
-    //       })
-    //     })
-    //     .then(({body})=> {
-    //       runInAction(()=>{
-    //         this.pc_worldstate = body
-    //       })
-    //     })
-    // }
 
     @action
     setpcstate = async () => {
@@ -59,10 +48,10 @@ export default class Worldstate {
       })
     }   
     @action
-    async checkpersistent(){
+    setpersistentenemies = async ()=>{
       const {obj} = await this.client.apis.worldstate.get_pc_persistentEnemies()
-      obj.forEach(enemy=>{
-
+      runInAction(()=>{
+        this.persistentEnemies = obj
       })
     }
 }

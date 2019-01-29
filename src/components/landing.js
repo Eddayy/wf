@@ -10,7 +10,7 @@ class Landing extends React.Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(() =>  this.props.store.setpcstate(), 22000);
+    this.interval = setInterval(() =>  this.props.store.setpersistentenemies(), 22000);
     this.setState({ seconds: 20 })
   }
   componentWillUnmount() {
@@ -21,7 +21,7 @@ class Landing extends React.Component {
     return (
       <div>
         Worldstate:
-        {persistentEnemies && 
+        {persistentEnemies[0] && 
             <div>
             {persistentEnemies.map(acolyte => {
               return(
