@@ -7,14 +7,13 @@ import swagger from './swagger'
 export default class Worldstate {  
     @observable pc_worldstate = {};
     @observable client ={} ;
-    @observable persistentEnemies = {};
 
     constructor() {
       this.setclient()
     }
 
     @computed get get_pc_persistentEnemies(){
-      return this.persistentEnemies
+      return this.pc_worldstate.persistentEnemies
     }
 
     @computed get check(){
@@ -51,7 +50,7 @@ export default class Worldstate {
     setpersistentenemies = async ()=>{
       const {obj} = await this.client.apis.worldstate.get_pc_persistentEnemies()
       runInAction(()=>{
-        this.persistentEnemies = obj
+        this.pc_worldstate.persistentEnemies = obj
       })
     }
 }

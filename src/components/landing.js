@@ -21,7 +21,7 @@ class Landing extends React.Component {
     return (
       <div>
         Worldstate:
-        {persistentEnemies[0] && 
+        {persistentEnemies && 
             <div>
             {persistentEnemies.map(acolyte => {
               return(
