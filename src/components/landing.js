@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { observer } from 'mobx-react'
+import { observer ,inject} from 'mobx-react'
 import Countdown from 'react-countdown-now';
 
+@inject("store")
 @observer
 class Landing extends React.Component {
   constructor(props) {
