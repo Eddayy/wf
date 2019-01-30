@@ -2,6 +2,8 @@ import * as React from 'react';
 import { observer ,inject} from 'mobx-react'
 import Countdown from 'react-countdown-now';
 
+
+
 @inject("store")
 @observer
 class Landing extends React.Component {
@@ -19,10 +21,10 @@ class Landing extends React.Component {
   }
   render() {
     const persistentEnemies = this.props.store.get_pc_persistentEnemies
+    const ready = this.props.store.ready
     return (
       <div>
-        Worldstate:
-        {persistentEnemies && 
+        {ready ? 
             <div>
             {persistentEnemies.map(acolyte => {
               return(
@@ -41,6 +43,8 @@ class Landing extends React.Component {
                 return <span>{seconds} seconds</span>;
               }}
             />
+          </div>:
+          <div>
           </div>
         }
       </div>

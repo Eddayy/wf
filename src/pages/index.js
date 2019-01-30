@@ -3,7 +3,7 @@ import React from 'react'
 
 import Layout from '../components/layout'
 import SEO from '../components/seo'
-import Landing from '../components/landing'
+import Landing from '../components/acolyte'
 
 //import worldstate from '../containers/worldstate';
 

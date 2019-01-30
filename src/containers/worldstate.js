@@ -1,12 +1,13 @@
 import Swagger from 'swagger-client'
 
-import { observable, computed , action , configure , runInAction} from 'mobx';
+import { observable, computed , action  , runInAction} from 'mobx';
 
 import swagger from './swagger'
 
 export default class Worldstate {  
     @observable pc_worldstate = {};
     @observable client ={} ;
+    @observable ready = false;
 
     constructor() {
       this.setclient()
@@ -33,9 +34,7 @@ export default class Worldstate {
       const {body} = await this.client.apis.worldstate.get_pc()
       runInAction(()=>{
         this.pc_worldstate = body
-      })
-      runInAction(()=>{
-        this.persistentEnemies = this.pc_worldstate.persistentEnemies
+        this.ready = true
       })
     }
 
